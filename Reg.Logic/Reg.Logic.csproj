@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Google.Apis" Version="1.38.0" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.38.0.1495" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Reg.Contracts\Reg.Contracts.csproj" />
+    <ProjectReference Include="..\Reg.DataAccess\Reg.DataAccess.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="secret_debug.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
