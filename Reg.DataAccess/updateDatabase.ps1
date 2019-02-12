@@ -1,1 +1,2 @@
-﻿dotnet ef --startup-project ../Revit.Reg database update
+﻿dotnet ef --startup-project ../Reg.Logic database update
+cmd /c pause | out-null
