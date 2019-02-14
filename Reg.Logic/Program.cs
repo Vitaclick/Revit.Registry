@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 using Reg.Contracts;
 using Reg.DataAccess.Contexts;
 using Reg.Domain.Entities;
@@ -14,57 +14,50 @@ using Reg.Logic.Handlers;
 using Reg.Logic.Managers;
 using Reg.Logic.Validators;
 
-namespace Revit.Registry
+namespace Reg.Logic
 {
-//  public class ParseRSN : IHostedService, IDisposable
-//  {
-//    private readonly ILogger _logger;
-////    private readonly IOptions<>
-//  }
   class Program
   {
-//    public IServiceProvider Services { get; private set; }
-
-    static async Task Main(string[] args)
+    public static async Task Main(string[] args)
     {
       var host = new HostBuilder()
-        .ConfigureHostConfiguration(configBuidler =>
+        .ConfigureHostConfiguration(configHost =>
         {
-          configBuidler.AddJsonFile("appsettings.json", optional: true);
-          configBuidler.AddCommandLine(args);
+          configHost.SetBasePath(Directory.GetCurrentDirectory());
+          configHost.AddJsonFile("hostsettings.json", optional: true);
+          configHost.AddJsonFile("appsettings.json", optional: true);
+          configHost.AddCommandLine(args);
         })
+        .ConfigureAppConfiguration(((hostContext, configApp) =>
+        {
+          configApp.AddJsonFile("appsettings.json", optional: true);
+          configApp.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
+            optional: true);
+          configApp.AddCommandLine(args);
+        }))
 
         //is used to register services (“dependencies”) with the service (“dependency injection”) container.
         .ConfigureServices((hostContent, services) =>
         {
+          services.Configure<AppSettings>()
+
+          services.AddHostedService<CrawlerRsnService>();
           services.AddDbContext<RegDbContext>();
-          services.AddTransient<ILogger, Logger>();
+          services.AddTransient<RegILogger, RegLogger>();
           services.AddTransient<IValidator<Project>, ProjectValidator>();
           services.AddTransient<IExceptionHandler, ExceptionHandler>();
           services.AddTransient<IEntityFactory<Project>, ProjectFactory>();
           services.AddTransient<IProjectRepository, ProjectManager>();
         })
-//        .ConfigureLogging((hostContext, configLogging) => { configLogging.AddConsole(); })
+        .ConfigureLogging((hostContext, configLogging) =>
+        {
+          configLogging.AddConsole();
+        })
         .UseConsoleLifetime()
         .Build();
 
-      // console
 //      await host.RunConsoleAsync();
       await host.RunAsync();
-
-
-
-
-//
-//      var configurationBuilder = new ConfigurationBuilder();
-//      var configRoot = configurationBuilder.Build();
-
-//      var services = new ServiceCollection();
-
-
-
-
-      
 
       var revitData = new List<IList<object>>() { new List<object>() { "lol", "kek", "cheburek" } };
 

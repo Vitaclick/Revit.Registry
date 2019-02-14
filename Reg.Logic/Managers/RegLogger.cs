@@ -4,7 +4,7 @@ using Reg.Contracts;
 
 namespace Reg.Logic.Managers
 {
-  public class Logger: ILogger
+  public class RegLogger: RegILogger
   {
     public void Log(Exception ex)
     {

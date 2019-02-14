@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Reg.DataAccess.Contexts;
 using Xunit;
 
-namespace Reg.Test
+namespace Reg.Tests
 {
-  public class BasicCRUD
+  public class BasicTest
   {
     [Fact]
     public async Task BasicCrud()
@@ -19,7 +17,7 @@ namespace Reg.Test
       // set up context
       using (var context = new RegDbContext(options))
       {
-//        var service new 
+        //        var service new 
       }
 
     }

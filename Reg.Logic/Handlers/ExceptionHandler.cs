@@ -7,9 +7,9 @@ namespace Reg.Logic.Handlers
 {
   public class ExceptionHandler: IExceptionHandler
   {
-    private ILogger _logger;
+    private RegILogger _logger;
 
-    public ExceptionHandler(ILogger logger)
+    public ExceptionHandler(RegILogger logger)
     {
       _logger = logger;
     }
