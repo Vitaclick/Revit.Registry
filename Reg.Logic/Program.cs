@@ -39,8 +39,13 @@ namespace Reg.Logic
         //is used to register services (“dependencies”) with the service (“dependency injection”) container.
         .ConfigureServices((hostContent, services) =>
         {
-          services.Configure<AppSettings>()
+          if (hostContent.HostingEnvironment.IsDevelopment())
+          {
+            // development service config
+          }
 
+          services.Configure<AppSettings>(hostContent.Configuration.GetSection("AppSettings"));
+          
           services.AddHostedService<CrawlerRsnService>();
           services.AddDbContext<RegDbContext>();
           services.AddTransient<RegILogger, RegLogger>();
