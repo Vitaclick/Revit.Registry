@@ -6,10 +6,10 @@ using Reg.Domain.Entities;
 
 namespace Reg.DataAccess.Contexts
 {
-  public class RegDbContext: DbContext
+  public class RegDbContext : DbContext
   {
     public DbSet<Project> Projects { get; set; }
-    public RegDbContext(DbContextOptions options): base(options) { }
+    public RegDbContext(DbContextOptions options) : base(options) { }
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {

@@ -2,7 +2,7 @@
 
 namespace Reg.Contracts
 {
-  public interface RegILogger
+  public interface IRegLogger
   {
     void Log(Exception ex);
   }

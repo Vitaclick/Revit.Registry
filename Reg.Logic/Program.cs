@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,31 +25,38 @@ namespace Reg.Logic
         .ConfigureHostConfiguration(configHost =>
         {
           configHost.SetBasePath(Directory.GetCurrentDirectory());
-          configHost.AddJsonFile("hostsettings.json", optional: true);
+          //          configHost.AddJsonFile("hostsettings.json", optional: true);
           configHost.AddJsonFile("appsettings.json", optional: true);
           configHost.AddCommandLine(args);
         })
         .ConfigureAppConfiguration(((hostContext, configApp) =>
         {
           configApp.AddJsonFile("appsettings.json", optional: true);
-          configApp.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
-            optional: true);
+          //          configApp.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
+          //            optional: true);
           configApp.AddCommandLine(args);
         }))
 
         //is used to register services (“dependencies”) with the service (“dependency injection”) container.
         .ConfigureServices((hostContent, services) =>
         {
+          string connection;
           if (hostContent.HostingEnvironment.IsDevelopment())
           {
             // development service config
+            connection = hostContent.Configuration.GetConnectionString("LocalDbServer");
+          }
+          else
+          {
+            connection = hostContent.Configuration.GetSection("LocalDbServer").Value;
           }
 
           services.Configure<AppSettings>(hostContent.Configuration.GetSection("AppSettings"));
-          
+
           services.AddHostedService<CrawlerRsnService>();
+          //          services.AddDbContext<RegDbContext>(options => options.UseSqlServer(connection));
           services.AddDbContext<RegDbContext>();
-          services.AddTransient<RegILogger, RegLogger>();
+          services.AddTransient<IRegLogger, RegLogger>();
           services.AddTransient<IValidator<Project>, ProjectValidator>();
           services.AddTransient<IExceptionHandler, ExceptionHandler>();
           services.AddTransient<IEntityFactory<Project>, ProjectFactory>();
@@ -61,20 +69,20 @@ namespace Reg.Logic
         .UseConsoleLifetime()
         .Build();
 
-//      await host.RunConsoleAsync();
+      //      await host.RunConsoleAsync();
       await host.RunAsync();
 
       var revitData = new List<IList<object>>() { new List<object>() { "lol", "kek", "cheburek" } };
 
-//      var data = new List<object>(){"lol", "kek", "cheburek"};
+      //      var data = new List<object>(){"lol", "kek", "cheburek"};
 
-//      foreach (var i in data)
-//      {
-//        revitData.Add((IList<object>)i);
-//      }
+      //      foreach (var i in data)
+      //      {
+      //        revitData.Add((IList<object>)i);
+      //      }
 
-//      var transfer = new Transfer();
-//      transfer.WriteData("A:A", revitData);
+      //      var transfer = new Transfer();
+      //      transfer.WriteData("A:A", revitData);
 
       Console.WriteLine("Hello World!");
 

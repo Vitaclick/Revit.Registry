@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Reg.Contracts;
 using Reg.Domain.Entities;
 
@@ -18,26 +19,26 @@ namespace Reg.Logic.Managers
       _factory = factory;
     }
 
-    public bool AddProject(Project project)
+    public async Task<bool> AddProject(Project project)
     {
       if (_validator.IsValid(project))
-        return _handler.Run(() => _factory.CreateAsync(project).Result);
+        return await _handler.Run(() => _factory.CreateAsync(project));
       return false;
     }
 
-    public Project GetProject(int id)
+    public Task<Project> GetProject(int id)
     {
       throw new NotImplementedException();
     }
 
-    public bool RemoveProject(int id)
+    public Task<bool> RemoveProject(int id)
     {
       throw new NotImplementedException();
     }
 
-    public ICollection<Project> GetAllProjects()
+    public Task<ICollection<Project>> GetAllProjects()
     {
-      return _handler.Run(() => _factory.GetAllAsync().Result);
+      return _handler.Run(() => _factory.GetAllAsync());
     }
   }
 }
