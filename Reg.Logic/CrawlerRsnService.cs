@@ -42,7 +42,7 @@ namespace Reg.Logic
     {
       _logger.LogInformation("RSN crawling is working...");
       var projects = _projectRepository.GetAllProjects();
-      foreach (var project in projects)
+      foreach (var project in projects.Result)
       {
       _logger.LogInformation(project.Name);
 
