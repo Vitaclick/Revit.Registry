@@ -8,5 +8,6 @@ namespace Reg.Domain.Entities
   {
     public string Name { get; set; }
     public double StandartVersion { get; set; }
+    public List<Model> Models { get; set; }
   }
 }

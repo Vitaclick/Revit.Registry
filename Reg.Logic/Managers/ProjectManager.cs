@@ -1,44 +1,66 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Reg.Contracts;
+using Reg.DataAccess.Contexts;
 using Reg.Domain.Entities;
 
 namespace Reg.Logic.Managers
 {
   public class ProjectManager : IProjectRepository
   {
-    private IEntityFactory<Project> _factory;
-    private IValidator<Project> _validator;
-    private IExceptionHandler _handler;
+//    private IEntityFactory<Project> _factory;
+//    private IValidator<Project> _validator;
+    private readonly RegDbContext _context;
+//    private IExceptionHandler _handler;
 
-    public ProjectManager(IExceptionHandler handler, IValidator<Project> validator, IEntityFactory<Project> factory)
+    public ProjectManager(RegDbContext context
+//      , IExceptionHandler handler, IValidator<Project> validator, IEntityFactory<Project> factory
+      )
     {
-      _handler = handler;
-      _validator = validator;
-      _factory = factory;
+      _context = context;
+//      _handler = handler;
+//      _validator = validator;
+//      _factory = factory;
     }
 
-    public async Task<bool> AddProject(Project project)
-    {
-      if (_validator.IsValid(project))
-        return await _handler.Run(() => _factory.CreateAsync(project));
-      return false;
-    }
+//    public async Task<bool> AddProject(Project project)
+//    {
+//      if (_validator.IsValid(project))
+//        return await _handler.Run(() => _factory.CreateAsync(project));
+//      return false;
+//    }
+//
+//    public Task<Project> GetProject(int id)
+//    {
+//      throw new NotImplementedException();
+//    }
+//
+//    public Task<bool> RemoveProject(int id)
+//    {
+//      throw new NotImplementedException();
+//    }
+//
+//    public Task<ICollection<Project>> GetAllProjects()
+//    {
+//      return _handler.Run(() => _factory.GetAllAsync());
+//    }
 
-    public Task<Project> GetProject(int id)
+    public async Task<ICollection<Model>> GetProjectFiles(Project project)
     {
-      throw new NotImplementedException();
-    }
-
-    public Task<bool> RemoveProject(int id)
-    {
-      throw new NotImplementedException();
-    }
-
-    public Task<ICollection<Project>> GetAllProjects()
-    {
-      return _handler.Run(() => _factory.GetAllAsync());
+      if (!await _context.Projects.AnyAsync())
+        return null;
+      var projects = await _context.Projects.ToListAsync();
+      foreach (var prj in projects)
+      {
+        if (prj.Name == project.Name)
+        {
+          return prj.Models;
+        }
+      }
+      return null;
     }
   }
 }

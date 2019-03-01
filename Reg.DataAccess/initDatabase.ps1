@@ -1,2 +1,2 @@
-﻿dotnet ef --startup-project ../Reg.Logic migrations add initdemo
+﻿dotnet ef --startup-project ../Reg.Logic migrations add init
 cmd /c pause | out-null

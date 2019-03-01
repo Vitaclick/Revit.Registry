@@ -34,20 +34,20 @@ namespace Reg.Logic
       _logger.LogInformation("Crawling is started");
       var lol = _configuration.GetSection("AppSettings");
       Debug.Write(_settings.SecretGoogleApiKey);
-      CrawlRsn();
+//      CrawlRsn();
       return Task.CompletedTask;
     }
 
-    private void CrawlRsn()
-    {
-      _logger.LogInformation("RSN crawling is working...");
-      var projects = _projectRepository.GetAllProjects();
-      foreach (var project in projects.Result)
-      {
-      _logger.LogInformation(project.Name);
-
-      }
-    }
+//    private void CrawlRsn()
+//    {
+//      _logger.LogInformation("RSN crawling is working...");
+//      var projects = _projectRepository.GetAllProjects();
+//      foreach (var project in projects.Result)
+//      {
+//      _logger.LogInformation(project.Name);
+//
+//      }
+//    }
     public Task StopAsync(CancellationToken cancellationToken)
     {
       _logger.LogInformation("RSN crawler is stopping");
