@@ -4,6 +4,7 @@ namespace Reg.Contracts
 {
   public interface IRegLogger
   {
-    void Log(Exception ex);
+    void Log(string message);
+    void Exception(Exception ex);
   }
 }

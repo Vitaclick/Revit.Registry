@@ -8,10 +8,11 @@ namespace Reg.Contracts
 {
   public interface IProjectRepository
   {
-//    Task<bool> AddProject(Project project);
-//    Task<Project> GetProject(int id);
-//    Task<bool> RemoveProject(int id);
-//    Task<ICollection<Project>> GetAllProjects();
-    Task<ICollection<Model>> GetProjectFiles(Project project);
+    //    Task<bool> AddProject(Project project);
+    //    Task<Project> GetProject(int id);
+    //    Task<bool> RemoveProject(int id);
+    //    Task<ICollection<Project>> GetAllProjects();
+    Task<ICollection<Model>> GetProjectFiles(string projectName);
+    Task<ICollection<Log>> GetModelLogs(string modelName);
   }
 }

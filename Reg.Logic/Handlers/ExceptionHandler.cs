@@ -5,7 +5,7 @@ using Reg.Contracts;
 
 namespace Reg.Logic.Handlers
 {
-  public class ExceptionHandler: IExceptionHandler
+  public class ExceptionHandler : IExceptionHandler
   {
     private IRegLogger _logger;
 
@@ -21,7 +21,7 @@ namespace Reg.Logic.Handlers
       }
       catch (Exception ex)
       {
-        _logger.Log(ex);
+        _logger.Exception(ex);
       }
       return default(T);
 

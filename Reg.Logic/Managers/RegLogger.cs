@@ -6,9 +6,14 @@ namespace Reg.Logic.Managers
 {
   public class RegLogger : IRegLogger
   {
-    public void Log(Exception ex)
+    public void Exception(Exception ex)
     {
       throw new NotImplementedException();
+    }
+
+    public void Log(string message)
+    {
+
     }
 
   }

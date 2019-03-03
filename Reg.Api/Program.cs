@@ -18,8 +18,9 @@ namespace Reg.Api
     }
 
     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>()
-            .UseKestrel();
+      WebHost.CreateDefaultBuilder(args)
+        .UseStartup<Startup>()
+        .UseKestrel()
+        .UseUrls("http://localhost:5000");
   }
 }

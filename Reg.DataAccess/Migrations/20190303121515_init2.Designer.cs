@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Reg.DataAccess.Contexts;
 
 namespace Reg.DataAccess.Migrations
 {
     [DbContext(typeof(RegDbContext))]
-    partial class RegDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190303121515_init2")]
+    partial class init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,7 @@ namespace Reg.DataAccess.Migrations
 
                     b.HasIndex("ModelId");
 
-                    b.ToTable("Logs");
+                    b.ToTable("Log");
                 });
 
             modelBuilder.Entity("Reg.Domain.Entities.Model", b =>
@@ -78,8 +80,7 @@ namespace Reg.DataAccess.Migrations
                 {
                     b.HasOne("Reg.Domain.Entities.Model", "Model")
                         .WithMany("Logs")
-                        .HasForeignKey("ModelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ModelId");
                 });
 
             modelBuilder.Entity("Reg.Domain.Entities.Model", b =>
